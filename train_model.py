@@ -60,27 +60,33 @@ save_model(model, model_path)
 encoder_path = os.path.join(project_path, "model", "encoder.pkl")
 save_model(encoder, encoder_path)
 
+print(f"Trained model saved to {model_path} successfully")
+
 # load the model
 model = load_model(
     model_path
 ) 
 
-# TODO: use the inference function to run the model inferences on the test dataset.
-preds = # your code here
+############################## TODO: use the inference function to run the model inferences on the test dataset.
+preds = inference(model,X_train)
 
 # Calculate and print the metrics
 p, r, fb = compute_model_metrics(y_test, preds)
 print(f"Precision: {p:.4f} | Recall: {r:.4f} | F1: {fb:.4f}")
 
-# TODO: compute the performance on model slices using the performance_on_categorical_slice function
+############################# TODO: compute the performance on model slices using the performance_on_categorical_slice function
 # iterate through the categorical features
 for col in cat_features:
     # iterate through the unique values in one categorical feature
     for slicevalue in sorted(test[col].unique()):
         count = test[test[col] == slicevalue].shape[0]
         p, r, fb = performance_on_categorical_slice(
-            # your code here
-            # use test, col and slicevalue as part of the input
+            test,
+            categorical_features=cat_features,
+            label=col,
+            training=False,
+            encoder=encoder,
+            lb=lb
         )
         with open("slice_output.txt", "a") as f:
         print(f"{col}: {slicevalue}, Count: {count:,}", file=f)
