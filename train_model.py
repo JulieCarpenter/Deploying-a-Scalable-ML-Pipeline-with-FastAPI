@@ -1,5 +1,4 @@
 import os
-
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
@@ -12,15 +11,18 @@ from ml.model import (
     save_model,
     train_model,
 )
+
 ######################## TODO: load the cencus.csv data
-project_path = "Deploying-a-Scalable-ML-Pipeline-with-FastAPI"
+project_path = "../Deploying-a-Scalable-ML-Pipeline-with-FastAPI"
 data_path = os.path.join(project_path, "data", "census.csv")
 print(data_path)
 data = pd.read_csv(data_path)
 
 ######################## TODO: split the provided data to have a train dataset and a test dataset
 # Optional enhancement, use K-fold cross validation instead of a train-test split.
-train, test = train_test_split(data, test_size=0.20) ######### Add? random_state=42
+train, test = train_test_split(data, test_size=0.20) 
+#print('############### TRAINING DATA  ', train.shape)
+#print('############### TESTING DATA SHAPE= ', test.shape)
 
 # DO NOT MODIFY
 cat_features = [
@@ -60,15 +62,11 @@ save_model(model, model_path)
 encoder_path = os.path.join(project_path, "model", "encoder.pkl")
 save_model(encoder, encoder_path)
 
-print(f"Trained model saved to {model_path} successfully")
-
 # load the model
-model = load_model(
-    model_path
-) 
+model = load_model(model_path) 
 
 ############################## TODO: use the inference function to run the model inferences on the test dataset.
-preds = inference(model,X_train)
+preds = inference(model, X_test) 
 
 # Calculate and print the metrics
 p, r, fb = compute_model_metrics(y_test, preds)
@@ -82,12 +80,14 @@ for col in cat_features:
         count = test[test[col] == slicevalue].shape[0]
         p, r, fb = performance_on_categorical_slice(
             test,
-            categorical_features=cat_features,
-            label=col,
-            training=False,
+            col,
+            slicevalue,
+            cat_features,
+            label="salary",
             encoder=encoder,
-            lb=lb
+            lb=lb,
+            model=model
         )
         with open("slice_output.txt", "a") as f:
-        print(f"{col}: {slicevalue}, Count: {count:,}", file=f)
-        print(f"Precision: {p:.4f} | Recall: {r:.4f} | F1: {fb:.4f}", file=f)
+            print(f"{col}: {slicevalue}, Count: {count:,}", file=f)
+            print(f"Precision: {p:.4f} | Recall: {r:.4f} | F1: {fb:.4f}", file=f)

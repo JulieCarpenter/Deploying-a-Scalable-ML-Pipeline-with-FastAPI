@@ -1,28 +1,36 @@
+import os
+from numpy import load
 import pytest
-# TODO: add necessary import
+import pandas as pd
+import sklearn
 
-# TODO: implement the first test. Change the function name and input as needed
-def test_one():
-    """
-    # add description for the first test
-    """
-    # Your code here
-    pass
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from ml.data import process_data
+from ml.model import load_model, train_model
 
+# Define variables
+project_path = "../Deploying-a-Scalable-ML-Pipeline-with-FastAPI"
+data_path = os.path.join(project_path, "data", "census.csv")
+data = pd.read_csv(data_path)
+train, test = train_test_split(data, test_size=0.20)
 
-# TODO: implement the second test. Change the function name and input as needed
-def test_two():
+# Tests
+def test_model_exists():
     """
-    # add description for the second test
+    # Confirm that the model was created
     """
-    # Your code here
-    pass
+    model = load_model(os.path.join(project_path, "model", "model.pkl"))
+    assert type(model) == sklearn.ensemble._forest.RandomForestClassifier
 
+def test_num_train_rows():
+    """
+    # Confirm that number of rows in training set are as expected
+    """
+    assert train.shape[0] == 26048
 
-# TODO: implement the third test. Change the function name and input as needed
-def test_three():
+def test_num_test_rows():
     """
-    # add description for the third test
+    # Confirm that number of rows in test set are as expected
     """
-    # Your code here
-    pass
+    assert test.shape[0] == 6513

@@ -46,6 +46,7 @@ def compute_model_metrics(y, preds):
     fbeta = fbeta_score(y, preds, beta=1, zero_division=1)
     precision = precision_score(y, preds, zero_division=1)
     recall = recall_score(y, preds, zero_division=1)
+
     return precision, recall, fbeta
 
 
@@ -78,14 +79,16 @@ def save_model(model, path):
     """
     ############### TODO: implement the function
     # Pickle the model and store it at the location of path
-    pickled_model = pickle.dump(model,path) 
-
+    ############### Attempt #1 pickled_model = pickle.dump(model, path) 
+    with open(path, 'wb') as fp: pickle.dump(model,fp)
 
 
 def load_model(path):
     """ Loads pickle file from `path` and returns it."""
     ########## TODO: implement the function
-    return pickle.load(path)
+    with open(path, 'rb') as fp: 
+        model = pickle.load(fp)
+    return model
 
 
 def performance_on_categorical_slice(
