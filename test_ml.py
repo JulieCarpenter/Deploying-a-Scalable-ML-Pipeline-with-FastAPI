@@ -22,14 +22,19 @@ def test_model_exists():
     model = load_model(os.path.join(project_path, "model", "model.pkl"))
     assert type(model) == sklearn.ensemble._forest.RandomForestClassifier
 
-def test_num_train_rows():
+def test_num_rows():
     """
-    # Confirm that number of rows in training set are as expected
+    # Confirm that number of rows in training and test sets are as expected
     """
     assert train.shape[0] == 26048
-
-def test_num_test_rows():
-    """
-    # Confirm that number of rows in test set are as expected
-    """
     assert test.shape[0] == 6513
+
+def test_pickles():
+    """
+    # Confirm that pickle files were created
+    """
+    path = "../Deploying-a-Scalable-ML-Pipeline-with-FastAPI/model/"
+    assert os.path.exists("encoder.pkl")
+    assert os.path.exists("model.pkl")
+   
+    
