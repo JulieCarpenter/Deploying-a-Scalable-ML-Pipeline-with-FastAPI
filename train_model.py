@@ -87,3 +87,7 @@ for col in cat_features:
         with open("slice_output.txt", "a") as f:
             print(f"{col}: {slicevalue}, Count: {count:,}", file=f)
             print(f"Precision: {p:.4f} | Recall: {r:.4f} | F1: {fb:.4f}", file=f)
+
+# I'm adding this comment because I need 3 successful github actions and I currently have only two
+# because the workflow I selected initially wasn't a good choice and I had to select another
+# after I completed the project.
