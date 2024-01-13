@@ -26,6 +26,7 @@ This model is used to predict the whether a person makes more than $50K/year or 
 - The target of the model is "salary."
 
 ## Metrics
+Metrics used and model performance:
 - Precision: 0.7677
 - Recall: 0.6292
 - F1: 0.6916
