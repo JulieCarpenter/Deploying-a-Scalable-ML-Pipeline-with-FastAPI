@@ -33,8 +33,9 @@ def test_pickles():
     """
     # Confirm that pickle files were created
     """
-    path = "../Deploying-a-Scalable-ML-Pipeline-with-FastAPI/model/"
-    assert os.path.exists("encoder.pkl")
-    assert os.path.exists("model.pkl")
+    pickle_enc = os.path.join(project_path, "model", "encoder.pkl")
+    pickle_mod = os.path.join(project_path, "model", "model.pkl")
+    assert os.path.exists(pickle_enc)
+    assert os.path.exists(pickle_mod)
    
     
